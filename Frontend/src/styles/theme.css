@@ -1,0 +1,31 @@
+
+
+/* Default = Dark */
+
+:root {
+  --background: #020617;
+  --surface: #0F172A;
+  --card: #1E293B;
+  --border: #334155;
+
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+}
+
+/* Light Theme */
+
+.light {
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --card: #F1F5F9;
+  --border: #CBD5E1;
+
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+
+  --text: #0F172A;
+  --muted: #475569;
+}
