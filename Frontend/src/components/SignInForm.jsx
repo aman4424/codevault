@@ -1,21 +1,9 @@
 import React from 'react'
 import Button from './Button'
-const SignInCard = () => {
+const SignInForm = () => {
   return (
-
-   
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
-            {/* sign in heading */}
-            {/* <div className="w-full max-w-md rounded-t-2xl border-b-gray-400 border-b-1  shadow-xl ">
-                  <div className=" p-3 top-0 rounded-t-2xl text-2xl underline decoration-1 bg-surface ">
-                  Sign In
-                </div>
-            </div> */}
-
-            {/*sign in hero*/}
-            <div className="w-full max-w-md rounded-2xl border border-border bg-card p-5 shadow-xl relative">
-                {/* enter credentials */}
-                <div className='flex flex-col items-center gap-2'>
+    <div>
+        <div className='flex flex-col items-center gap-2'>
                   <input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' />
                   <input type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' />
                   
@@ -30,13 +18,9 @@ const SignInCard = () => {
                   <p>new user?</p>
                   <a href="" className='text-blue-700 underline'>Sign Up</a>
                 </div>
-          </div>
-
-         
-         
     </div>
+        
   )
 }
 
-export default SignInCard
-
+export default SignInForm
