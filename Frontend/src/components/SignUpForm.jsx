@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Button from './Button'
+
 const SignUpForm = () => {
   return (
     <div className='flex flex-col items-center gap-2'>
@@ -13,7 +15,8 @@ const SignUpForm = () => {
                     {/* Sign In Instead */}
                        <div className='flex gap-2 text-[.8rem] justify-center items-center'>
                   <p>Already have an account?</p>
-                  <a href="" className='text-blue-700 underline'>Sign In</a>
+                  {/* <a href="" >Sign In</a> */}
+                  <Link to='/signin' className='text-blue-700 underline'>Sign in</Link>
                 </div>
                   
         </div>
