@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
-
+import Input from './Input'
+import PassInput from './PassInput'
 const SignInForm = () => {
   return (
     <div>
         <div className='flex flex-col items-center gap-2'>
-                  <input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' />
-                  <input type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' />
+                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' />
+                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' />
                   
                 </div>
                 {/* forgot password and sign in  */}
