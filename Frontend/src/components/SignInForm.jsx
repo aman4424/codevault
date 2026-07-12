@@ -5,13 +5,38 @@ import Input from './Input'
 import PassInput from './PassInput'
 import { useState } from 'react'
 const SignInForm = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
+    const [formData, setFormData ] = useState({
+      email:"",
+      password:""
+    })
+
+    const [errors, setErrors] = useState({
+        email: "",
+        
+      })
+    const validateEmail=(email)=>{
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      setErrors((prev)=>({
+        ...prev,email:emailRegex.test(email)?"": "Please enter a valid email address.",
+      }))
+    }
+    const handleChange = (field) => (e) => {
+    const value = e.target.value
+    setFormData((prev) => ({ ...prev, [field]: value }))
+
+    if (field === 'email') {
+      validateEmail(value)
+    }
+    console.log(errors)
+  }
+    
   return (
     <div>
         <div className='flex flex-col items-center gap-2'>
-                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
-                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' value={password} onChange={(e)=>{setPassword(e.target.value)}}
+                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' value={formData.email} onChange={handleChange("email")}/>
+                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' value={formData.password} onChange={handleChange("password")}
               />
                   
                 </div>
