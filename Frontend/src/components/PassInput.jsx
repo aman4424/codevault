@@ -17,7 +17,8 @@ const PassInput = (props) => {
 
       <Eye 
       className={`${visEye} cursor-pointer `}
-       onMouseEnter={()=>{
+       onClick={()=>{
+        // if(props.value.length==0)return;
         setVisEye('hidden')
         setVisEyeOff("")
         setType("text")
@@ -27,7 +28,7 @@ const PassInput = (props) => {
        />
       <EyeOff 
       className={`${visEyeOff} cursor-pointer `}
-       onMouseLeave={()=>{
+       onClick={()=>{
         setVisEye("")
         setVisEyeOff("hidden")
         setType("password")

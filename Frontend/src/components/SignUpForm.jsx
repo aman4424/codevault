@@ -6,35 +6,77 @@ import Input from './Input'
 import PassInput from './PassInput'
 
 const SignUpForm = () => {
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confPassword, setConfPassword] = useState("")
-  
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    setErrors((prev) => ({
+      ...prev,
+      email: emailRegex.test(email) ? "" : "Please enter a valid email address.",
+    }))
+  }
+
+  const handleChange = (field) => (e) => {
+    const value = e.target.value
+    setFormData((prev) => ({ ...prev, [field]: value }))
+
+    if (field === 'email') {
+      validateEmail(value)
+    }
+  }
+
   return (
     <div className='flex flex-col items-center gap-2'>
-                    {/* Enter Credentials and Sign up */}
-                    
-                  <Input type="text" placeholder='enter your name' className='bg-primary rounded w-full p-1'  value={userName} onChange={(e)=>{setUserName(e.target.value)}}/>
-                  <Input type="email" placeholder={'enter email'} className='bg-primary rounded w-full p-1' value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1'value={password} onChange={(e)=>{setPassword(e.target.value)}}
-              
-                  />
-                  <PassInput type="password" placeholder={'confirm password'} className='bg-primary rounded w-full p-1' value={confPassword } onChange={(e)=>{setConfPassword(e.target.value)}}
-              
-                  />
-                  
-                  <Button value="Sign Up" onClick={()=>{
-                    // console.log("jijaji")
-                  }}/>
-                    {/* Sign In Instead */}
-                       <div className='flex gap-2 text-[.8rem] justify-center items-center'>
-                  <p>Already have an account?</p>
-                  {/* <a href="" >Sign In</a> */}
-                  <Link to='/signin' className='text-blue-700 underline'>Sign in</Link>
-                </div>
-                  
-        </div>
+      {/* Enter Credentials and Sign up */}
+      <Input
+        type="text"
+        placeholder='enter your name'
+        className='bg-primary rounded w-full p-1'
+        value={formData.userName}
+        onChange={handleChange('userName')}
+      />
+      <Input
+        type="email"
+        placeholder='enter email'
+        className='bg-primary rounded w-full p-1'
+        value={formData.email}
+        onChange={handleChange('email')}
+      />
+      {errors.email && <p className='text-red-500 text-sm self-start'>{errors.email}</p>}
+      <PassInput
+        type="password"
+        placeholder='enter password'
+        className='bg-primary rounded w-full p-1'
+        value={formData.password}
+        onChange={handleChange('password')}
+      />
+      <PassInput
+        type="password"
+        placeholder='confirm password'
+        className='bg-primary rounded w-full p-1'
+        value={formData.confirmPassword}
+        onChange={handleChange('confirmPassword')}
+      />
+
+      <Button value="Sign Up" onClick={() => {}} />
+
+      {/* Sign In Instead */}
+      <div className='flex gap-2 text-[.8rem] justify-center items-center'>
+        <p>Already have an account?</p>
+        <Link to='/signin' className='text-blue-700 underline'>Sign in</Link>
+      </div>
+    </div>
   )
 }
 

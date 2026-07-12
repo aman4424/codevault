@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom'
 import Button from './Button'
 import Input from './Input'
 import PassInput from './PassInput'
+import { useState } from 'react'
 const SignInForm = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
   return (
     <div>
         <div className='flex flex-col items-center gap-2'>
-                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' />
-                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' />
+                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' value={password} onChange={(e)=>{setPassword(e.target.value)}}
+              />
                   
                 </div>
                 {/* forgot password and sign in  */}
