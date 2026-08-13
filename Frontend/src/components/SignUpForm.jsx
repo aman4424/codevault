@@ -7,14 +7,14 @@ import PassInput from './PassInput'
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    userName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   })
 
   const [errors, setErrors] = useState({
-    userName:"",
+    name:"",
     email: "",
     password: "",
     confirmPassword: "",
@@ -54,9 +54,9 @@ const SignUpForm = () => {
     }
   }
   
-  const validateUserName=(name)=>{
+  const validateName=(name)=>{
       setErrors((prev)=>({
-        ...prev,userName:name.length===0?"*Required":" "
+        ...prev,name:name.length===0?"*Required":" "
       }))
       
   }
@@ -73,9 +73,8 @@ const SignUpForm = () => {
     if(field ==='confirmPassword'){
       validateConfirmPassword(value)
     }
-    if(field==='userName'){
-      validateUserName(value)
-    }
+    if(field==='name'){
+      validateName(value)
   }
 
   return (
@@ -86,12 +85,12 @@ const SignUpForm = () => {
         type="text"
         placeholder='enter your name'
         className='bg-primary rounded w-full p-1 '
-        value={formData.userName}
-        onChange={handleChange('userName')}
+        value={formData.name}
+        onChange={handleChange('name')}
       />
      
        <div className={`text-red-700 text-[0.9rem]`}>
-        {errors.userName}
+        {errors.name}
       </div>
        
       <Input
