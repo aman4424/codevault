@@ -104,12 +104,23 @@ const register=async(userData)=>{
     const normalizedEmail = email.trim().toLowerCase();
     await checkDuplicateEmail(normalizedEmail);
     const hashedPassword=await hashPassword(password);
-    const result=await User.create({name,email:normalizedEmail,password:hashedPassword});
-    return {
+    
+    try {
+        const result=await User.create({name,email:normalizedEmail,password:hashedPassword});
+        return {
         id:result._id,
         name:result.name,
         email:result.email
     };
+    } catch (error) {
+        if(error.code===11000){
+            const newError=new Error("Email already exists");
+            newError.status=409;
+            throw newError;
+        }
+        throw error;
+    }
+    
 }
 
 module.exports={
