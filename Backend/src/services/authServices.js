@@ -1,5 +1,6 @@
-const User=require("../models/User")
-const bcrypt =require('bcrypt')
+const User=require("../models/User");
+const jwt=require("jsonwebtoken");
+const bcrypt =require('bcrypt');
 const validateName=(name)=>{
     if(typeof name!=='string'||name.trim().length===0){
         const error=new Error("Please enter a valid name."); 
@@ -96,6 +97,18 @@ const hashPassword= async(password)=>{
     const hash= await bcrypt.hash(password,saltRounds);
     return hash;
 }
+const generateToken=(user)=>{
+    return jwt.sign(
+        {
+            userId:user._id,
+            name:user.name,
+            email:user.email
+        },process.env.JWT_SECRET,
+        {
+            expiresIn:'15d'
+        }
+    )
+}
 const register=async(userData)=>{
     const{name,email,password}=userData;
     validateName(name);
@@ -107,11 +120,13 @@ const register=async(userData)=>{
     
     try {
         const result=await User.create({name,email:normalizedEmail,password:hashedPassword});
+        const token= generateToken(result);
         return {
         id:result._id,
         name:result.name,
-        email:result.email
-    };
+        email:result.email,
+        token
+        };
     } catch (error) {
         if(error.code===11000){
             const newError=new Error("Email already exists");
