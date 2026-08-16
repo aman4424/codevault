@@ -42,7 +42,7 @@ const validatePassword=(password)=>{
         error.status=400;
         throw error;
     }
-    if(password.trim().length==0){
+    if(password.trim().length===0){
         const error=new Error("Password cannot be empty");
         error.status=400;
         throw error;
@@ -92,6 +92,22 @@ const checkDuplicateEmail=async (email)=>{
     }
 
 }
+const validateLoginPassword=(password)=>{
+    if(typeof password!=='string'||password.length===0){
+        const error=new Error("Please enter a valid password");
+        error.status=400;
+        throw error;
+    }
+}
+const checkExistingEmail=async (email)=>{
+    const existingUser=await User.findOne({email});
+    if(existingUser===null){
+    const error=new Error("Invalid email or password.");
+        error.status=401;
+        throw error;
+    }
+    return existingUser;
+}
 const hashPassword= async(password)=>{
     const saltRounds=10;
     const hash= await bcrypt.hash(password,saltRounds);
@@ -138,6 +154,31 @@ const register=async(userData)=>{
     
 }
 
+const login=async(userData)=>{
+    const{email,password}=userData;
+    validateEmail(email);
+    validateLoginPassword(password);
+    const normalizedEmail = email.trim().toLowerCase();
+    const user=await checkExistingEmail(normalizedEmail);
+    const passwordIsMatching=await bcrypt.compare(password,user.password);
+    if(!passwordIsMatching){
+        const error=new Error("Invalid email or password.");
+        error.status=401;
+        throw error;
+    }
+    const token= generateToken(user);
+        return {
+        id:user._id,
+        name:user.name,
+        email:user.email,
+        token
+    };
+  
+        
+
+
+}
+
 module.exports={
-    register,
+    register,login,
 }
