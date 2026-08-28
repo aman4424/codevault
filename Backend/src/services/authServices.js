@@ -1,6 +1,7 @@
 const User=require("../models/User");
 const jwt=require("jsonwebtoken");
 const bcrypt =require('bcrypt');
+const emailServices=require("../services/emailServices")
 const validateName=(name)=>{
     if(typeof name!=='string'||name.trim().length===0){
         const error=new Error("Please enter a valid name."); 
@@ -113,7 +114,7 @@ const hashPassword= async(password)=>{
     const hash= await bcrypt.hash(password,saltRounds);
     return hash;
 }
-const generateToken=(user)=>{
+const generateAuthToken=(user,expiry)=>{
     return jwt.sign(
         {
             userId:user._id,
@@ -121,7 +122,7 @@ const generateToken=(user)=>{
             email:user.email
         },process.env.JWT_SECRET,
         {
-            expiresIn:'15d'
+            expiresIn:`${expiry}`
         }
     )
 }
@@ -136,7 +137,7 @@ const register=async(userData)=>{
     
     try {
         const result=await User.create({name,email:normalizedEmail,password:hashedPassword});
-        const token= generateToken(result);
+        const token= generateAuthToken(result,'15d');
         return {
         id:result._id,
         name:result.name,
@@ -166,7 +167,7 @@ const login=async(userData)=>{
         error.status=401;
         throw error;
     }
-    const token= generateToken(user);
+    const token= generateAuthToken(user,'15d');
         return {
         id:user._id,
         name:user.name,
@@ -175,10 +176,43 @@ const login=async(userData)=>{
     };
   
         
+}
 
+const generateRecoveryToken= (user)=>{
+    return jwt.sign(
+        {
+            userId:user._id,
+            email:user.email
+        },
+        process.env.FORGOT_PASSWORD_JWT_SECRET,
+        {
+            expiresIn:'2m'
+        }
+    )
+}
+
+
+const forgotPassword= async (userData)=>{
+    const {email}=userData;
+    validateEmail(email);
+    const normalizedEmail=email.trim().toLowerCase();
+    const user=await User.findOne({email:normalizedEmail});
+    if(user==null){
+        return {
+            message:"A reset link has been sent if an account exists with this email"
+        };
+    }
+    const token=generateRecoveryToken(user);
+    const url=`${process.env.RESET_PASSWORD_ROUTE}/${token}`;
+    await emailServices.sendResetPasswordURL(url,user.email);
+    
+    return {
+            message:"A reset link has been sent if an account exists with this email"
+        };
+  
 
 }
 
 module.exports={
-    register,login,
+    register,login,forgotPassword,
 }
