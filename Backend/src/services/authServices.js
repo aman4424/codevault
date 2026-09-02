@@ -1,7 +1,8 @@
 const User=require("../models/User");
 const jwt=require("jsonwebtoken");
 const bcrypt =require('bcrypt');
-const emailServices=require("../services/emailServices")
+const emailServices=require("../services/emailServices");
+const { default: mongoose } = require("mongoose");
 const validateName=(name)=>{
     if(typeof name!=='string'||name.trim().length===0){
         const error=new Error("Please enter a valid name."); 
@@ -212,7 +213,43 @@ const forgotPassword= async (userData)=>{
   
 
 }
+const resetPassword=async (userData)=>{
+    const password=userData.password;
+    const token=userData.token;
+     try {
+        const decoded=jwt.verify(token,process.env.FORGOT_PASSWORD_JWT_SECRET);
+        const user=await User.findOne({_id:decoded.userId});
+        if(user===null){
+            const newError= new Error("user does not exist.");
+            newError.status=401;
+            throw newError;
+        }
+        validatePassword(password);
+        const hashedPassword=await hashPassword(password);
+        user.password=hashedPassword;
+        await user.save();
+        return {
+            message:"Password reset successful.Please Sign In to continue.",
+        }
+
+   
+        
+    } catch (error) {
+        if(error.name=="TokenExpiredError"){
+            const newError=new Error("Reset link has expired");
+            newError.status=401;
+            throw newError;
+        }
+        else if(error.name=="JsonWebTokenError"){
+            const newError=new Error("Reset link is invalid");
+            newError.status=401;
+            throw newError;
+        }
+        throw error;
+
+    }
+}
 
 module.exports={
-    register,login,forgotPassword,
+    register,login,forgotPassword,resetPassword,
 }
