@@ -35,11 +35,11 @@ const SignInForm = () => {
   return (
     <div>
         <div className='flex flex-col items-center gap-2'>
-                  <Input type="text" placeholder={'enter email'} className='bg-primary rounded w-full p-1' value={formData.email} onChange={handleChange("email")}/>
+                  <Input type="text" placeholder={'enter email'} fieldName="Enter Email "className='bg-surface rounded w-full p-1' value={formData.email} onChange={handleChange("email")}/>
                   <div className={`text-red-700 text-[0.9rem]`}>
         {errors.email}
       </div> 
-                  <PassInput type="password" placeholder={'enter password'} className='bg-primary rounded w-full p-1' value={formData.password} onChange={handleChange("password")}
+                  <PassInput type="password" placeholder={'enter password'} className='bg-surface rounded w-full p-1' value={formData.password} fieldName="Enter Password " onChange={handleChange("password")}
               />
                  
                 </div>

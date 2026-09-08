@@ -76,14 +76,15 @@ const SignUpForm = () => {
     if(field==='name'){
       validateName(value)
   }
-
+  }
   return (
-    <div className='flex flex-col items-center gap-2'>
+    <div className='flex d  flex-col items-center gap-2'>
       {/* Enter Credentials and Sign up */}
       
         <Input
         type="text"
         placeholder='enter your name'
+        fieldName="Enter your name "
         className='bg-primary rounded w-full p-1 '
         value={formData.name}
         onChange={handleChange('name')}
@@ -96,6 +97,7 @@ const SignUpForm = () => {
       <Input
         type="email"
         placeholder='enter email'
+        fieldName="Enter your email "
         className='bg-primary rounded w-full p-1'
         value={formData.email}
         onChange={handleChange('email')}
@@ -108,6 +110,7 @@ const SignUpForm = () => {
       <PassInput
         type="password"
         placeholder='enter password'
+        fieldName="Enter Password "
         className='bg-primary rounded w-full p-1'
         value={formData.password}
         onChange={handleChange('password')}
@@ -118,6 +121,7 @@ const SignUpForm = () => {
       <PassInput
         type="password"
         placeholder='confirm password'
+        fieldName="Confirm Password "
         className='bg-primary rounded w-full p-1'
         value={formData.confirmPassword}
         onChange={handleChange('confirmPassword')}
@@ -137,4 +141,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default SignUpForm;

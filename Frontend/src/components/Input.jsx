@@ -3,10 +3,14 @@ import React from 'react'
 const Input = (props) => {
    
   return (
-    <div className='w-full bg-primary rounded p-1 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--primary)]'>
+    <div className="w-full ">
+      <p className='text-[var(--text)] text-base'> {props.fieldName}:</p>
+
+      <div className=' mt-1 bg-surface rounded p-1 outline-0 focus-within:outline-border focus-within:outline-3'>
+      
       <input
         type={props.type}
-        className='bg-primary rounded w-full p-1 outline-0 focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]'
+        className='bg-surface rounded w-full p-1 outline-0 text-sm'
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
@@ -14,6 +18,7 @@ const Input = (props) => {
       
 
       
+    </div>
     </div>
   )
 }

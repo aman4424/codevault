@@ -1,31 +1,50 @@
-
-
-/* Default = Dark */
+/* Default - Dark Theme */
 
 :root {
-  --background: #020617;
-  --surface: #0F172A;
-  --card: #1E293B;
-  --border: #334155;
+  /* Backgrounds */
+  --background: #080D1A;
+  --surface: #0D1528;
+  --card: #121D33;
+  --border: #263653;
 
-  --primary: #4F46E5;
-  --primary-hover: #4338CA;
+  /* Brand */
+  --primary: #1677FF;
+  --primary-hover: #3B8CFF;
 
-  --text: #F8FAFC;
+  /* Secondary brand accent */
+  --secondary: #FFC400;
+
+  /* Text */
+  --text: #F1F5FF;
   --muted: #94A3B8;
+
+  /* Status */
+  --success: #22C55E;
+  --error: #EF4444;
 }
+
 
 /* Light Theme */
 
 .light {
-  --background: #F8FAFC;
+  /* Backgrounds */
+  --background: #F5F8FF;
   --surface: #FFFFFF;
-  --card: #F1F5F9;
-  --border: #CBD5E1;
+  --card: #FFFFFF;
+  --border: #D7E0EF;
 
-  --primary: #4F46E5;
-  --primary-hover: #4338CA;
+  /* Brand */
+  --primary: #1264D8;
+  --primary-hover: #0B56C0;
 
-  --text: #0F172A;
-  --muted: #475569;
+  /* Secondary brand accent */
+  --secondary: #D99F00;
+
+  /* Text */
+  --text: #0B1426;
+  --muted: #64748B;
+
+  /* Status */
+  --success: #16A34A;
+  --error: #DC2626;
 }
