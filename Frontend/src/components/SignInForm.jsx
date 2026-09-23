@@ -4,6 +4,7 @@ import Button from './Button'
 import Input from './Input'
 import PassInput from './PassInput'
 import { useState } from 'react'
+import axios from 'axios'
 const SignInForm = () => {
     // const [email, setEmail] = useState("")
     // const [password, setPassword] = useState("")
@@ -31,6 +32,14 @@ const SignInForm = () => {
     }
    
   }
+  const onClickAction=async()=>{
+    
+    const response = await axios.post('http://localhost:5000/login', {
+     formData
+
+     });
+   console.log(response);
+  }
     
   return (
     <div>
@@ -45,8 +54,8 @@ const SignInForm = () => {
                 </div>
                 {/* forgot password and sign in  */}
                 <div className='flex justify-between items-baseline mt-4'>
-                  <a href="" className='decoration-1 underline text-blue-700'>forgot password?</a>
-                  <Button value="Sign in" />
+                  <Link to='/forgot-password' className='decoration-1 underline text-blue-700'>forgot password?</Link>
+                  <Button value="Sign in" onClickAction={onClickAction}/>
                 </div>
                 {/* sign up */}
                 <div className='flex gap-2 text-[.8rem] justify-center items-center'>

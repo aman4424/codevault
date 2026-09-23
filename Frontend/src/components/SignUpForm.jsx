@@ -4,6 +4,7 @@ import Button from './Button'
 import { useState } from 'react'
 import Input from './Input'
 import PassInput from './PassInput'
+import axios from 'axios'
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ const SignUpForm = () => {
     password: "",
     confirmPassword: "",
   })
+
+ const [backendError, setBackendError] = useState("")
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -77,6 +80,23 @@ const SignUpForm = () => {
       validateName(value)
   }
   }
+  const sendData=async()=>{
+    try {
+        console.log("signupfrontend")
+        const response= await axios.post("http://localhost:5000/api/auth/register",{
+        name:formData.name,
+        email:formData.email,
+        password:formData.password
+        });
+        console.log(response); 
+    } catch (error) {
+         console.log("STATUS:", error.response?.status);
+         console.log("DATA:", error.response?.data);
+         console.log("MESSAGE:", error.response?.data?.message);
+         setBackendError(error.response?.data?.message)
+         console.log(backendError)
+    }
+  }
   return (
     <div className='flex d  flex-col items-center gap-2'>
       {/* Enter Credentials and Sign up */}
@@ -130,7 +150,13 @@ const SignUpForm = () => {
         {errors.confirmPassword}
       </div>
 
-      <Button value="Sign Up" onClick={() => {}} />
+
+      <Button value="Sign Up" onClickAction={sendData} />
+
+      <div className={`text-red-700 text-[0.9rem]`}>
+        {backendError}
+      </div>
+      
 
       {/* Sign In Instead */}
       <div className='flex gap-2 text-[.8rem] justify-center items-center'>

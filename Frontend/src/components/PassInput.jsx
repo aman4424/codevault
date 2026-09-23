@@ -8,7 +8,7 @@ const PassInput = (props) => {
   return (
     <div className="w-full">
       <p className='text-[var(--text)] text-base '>{props.fieldName}:</p>
-      <div className='bg-surface mt-2 rounded w-full p-1 flex justify-center items-center focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-border '>
+      <div className='bg-surface mt-2 rounded w-full p-1 flex justify-center items-center focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-border '>
       <input
         type={type} className='bg-surface rounded w-full p-1 outline-0 text-sm'
         

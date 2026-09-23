@@ -139,6 +139,7 @@ const register=async(userData)=>{
     try {
         const result=await User.create({name,email:normalizedEmail,password:hashedPassword});
         const token= generateAuthToken(result,'15d');
+        console.log("signup")
         return {
         id:result._id,
         name:result.name,
@@ -205,6 +206,7 @@ const forgotPassword= async (userData)=>{
     }
     const token=generateRecoveryToken(user);
     const url=`${process.env.RESET_PASSWORD_ROUTE}/${token}`;
+    console.log(url);
     await emailServices.sendResetPasswordURL(url,user.email);
     
     return {
