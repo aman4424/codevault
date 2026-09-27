@@ -9,7 +9,7 @@ const SignInPage = () => {
         //  <div>
         //     <SignInCard/>
         //  </div>
-         <AuthLayout>
+         <AuthLayout heading="Welcome back" description="Sign in to continue to your CodeVault workspace.">
           <SignInForm/>
       </AuthLayout>
     )

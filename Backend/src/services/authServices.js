@@ -28,7 +28,7 @@ const validateEmail=(email)=>{
         error.status=400;
         throw error;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if(!emailRegex.test(trimmedEmail)){
         const error = new Error("Please enter a valid email.");
         error.status = 400;
@@ -159,6 +159,7 @@ const register=async(userData)=>{
 
 const login=async(userData)=>{
     const{email,password}=userData;
+   
     validateEmail(email);
     validateLoginPassword(password);
     const normalizedEmail = email.trim().toLowerCase();

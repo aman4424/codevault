@@ -2,7 +2,7 @@ import AuthLayout from "../layouts/AuthLayout"
 import ResetPasswordForm from "../components/ResetPasswordForm"
 const ResetPassword = () => {
   return (
-    <AuthLayout>
+    <AuthLayout heading="Set a new password" description="Choose a new password for your CodeVault account.">
         <ResetPasswordForm/>
     </AuthLayout>
   )

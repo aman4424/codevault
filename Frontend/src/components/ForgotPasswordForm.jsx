@@ -12,6 +12,8 @@ const ForgotPasswordForm = () => {
             email: "",
             
           })
+          const [backendError, setBackendError] = useState("")
+          const [backendMessage, setBackendMessage] = useState("")
         const validateEmail=(email)=>{
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
           setErrors((prev)=>({
@@ -28,7 +30,14 @@ const ForgotPasswordForm = () => {
        
       }
       const sendData=async()=>{
-        axios.post("http://localhost:5000/api/auth/forgot-password",{email:formData.email})
+        try {
+          setBackendError("")
+          setBackendMessage("")
+          const response=await axios.post("http://localhost:5000/api/auth/forgot-password",{email:formData.email})
+          setBackendMessage(response.data?.message)
+        } catch (error) {
+          setBackendError(error.response?.data?.message)
+        }
         
         // console.log("BUTTON WORKS");
         
@@ -44,8 +53,15 @@ const ForgotPasswordForm = () => {
     <div className="flex mt-4 items-center justify-center">
         
     <Button value='Send reset Link' onClickAction={sendData}/>
+   
 
     </div>
+     <div className={`text-red-700 text-[0.9rem] flex items-center justify-around`}>
+      {backendError}
+    </div>
+    <div className={`text-green-700 text-[0.9rem] flex items-center justify-around`}>
+        {backendMessage}
+      </div>
     
     </div>
   )

@@ -22,7 +22,7 @@ const SignUpForm = () => {
   })
 
  const [backendError, setBackendError] = useState("")
-
+ const [backendMessage, setBackendMessage] = useState("")
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     setErrors((prev) => ({
@@ -82,13 +82,16 @@ const SignUpForm = () => {
   }
   const sendData=async()=>{
     try {
-        console.log("signupfrontend")
+      setBackendError("")
+          setBackendMessage("")
+        // console.log("signupfrontend")
         const response= await axios.post("http://localhost:5000/api/auth/register",{
         name:formData.name,
         email:formData.email,
         password:formData.password
         });
         console.log(response); 
+        setBackendMessage(response.data?.message)
     } catch (error) {
          console.log("STATUS:", error.response?.status);
          console.log("DATA:", error.response?.data);
@@ -156,7 +159,9 @@ const SignUpForm = () => {
       <div className={`text-red-700 text-[0.9rem]`}>
         {backendError}
       </div>
-      
+      <div className={`text-green-700 text-[0.9rem] flex items-center justify-around`}>
+        {backendMessage}
+      </div>
 
       {/* Sign In Instead */}
       <div className='flex gap-2 text-[.8rem] justify-center items-center'>

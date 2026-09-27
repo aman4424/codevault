@@ -17,6 +17,8 @@ const SignInForm = () => {
         email: "",
         
       })
+    const [backendError, setBackendError] = useState("")
+    const [backendMessage, setBackendMessage] = useState("")
     const validateEmail=(email)=>{
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       setErrors((prev)=>({
@@ -33,12 +35,20 @@ const SignInForm = () => {
    
   }
   const onClickAction=async()=>{
-    
-    const response = await axios.post('http://localhost:5000/login', {
-     formData
+    try {
+      setBackendError("")
+          setBackendMessage("")
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+       email:formData.email,
+       password:formData.password
 
      });
-   console.log(response);
+     setBackendMessage(response.data?.message)
+   
+    } catch (error) {
+      setBackendError(error.response?.data?.message)
+      console.log(error.response?.data?.message); 
+    }
   }
     
   return (
@@ -52,11 +62,21 @@ const SignInForm = () => {
               />
                  
                 </div>
+
+                
+
                 {/* forgot password and sign in  */}
                 <div className='flex justify-between items-baseline mt-4'>
                   <Link to='/forgot-password' className='decoration-1 underline text-blue-700'>forgot password?</Link>
                   <Button value="Sign in" onClickAction={onClickAction}/>
+                  
                 </div>
+                <div className={`text-red-700 text-[0.9rem] flex items-center justify-around`}>
+                  {backendError}
+                  </div>
+                  <div className={`text-green-700 text-[0.9rem] flex items-center justify-around`}>
+                    {backendMessage}
+                  </div>
                 {/* sign up */}
                 <div className='flex gap-2 text-[.8rem] justify-center items-center'>
                   <p>new user?</p>

@@ -5,7 +5,7 @@ import SignUpForm from '../components/SignUpForm'
 const SignUpPage = () => {
   return (
     <div>
-      <AuthLayout>
+      <AuthLayout heading="Create your CodeVault account" description="Start organizing your knowledge and keep your learning in one place.">
        <SignUpForm/>
       </AuthLayout>
     </div>

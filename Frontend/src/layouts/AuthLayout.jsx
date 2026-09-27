@@ -13,6 +13,17 @@ const AuthLayout = (props) => {
 
             {/*Auth Card layout*/}
             <div className="w-full max-w-md rounded-2xl border border-border bg-card p-5 shadow-xl relative">
+                <div className="text-center mb-6">
+                  <h1 className="text-2xl font-semibold text-text">
+                   {props.heading}
+                  </h1>
+                  <p className="text-sm text-muted mt-2">
+                    {props.description}
+                  </p>
+
+                  <hr className="border-border mt-4 my-5" />
+ 
+</div>
             
                 {/* Card Contents  */}
                 {props.children}

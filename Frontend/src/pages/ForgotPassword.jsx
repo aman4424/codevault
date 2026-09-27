@@ -4,7 +4,7 @@ import { useState } from "react";
 const ForgotPassword = () => {
      
   return (
-    <AuthLayout>
+    <AuthLayout heading="Forgot your password?" description="Enter your email and we'll send you a reset link.">
         <ForgotPasswordForm/>
     </AuthLayout>
   )
