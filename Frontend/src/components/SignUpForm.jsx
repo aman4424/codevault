@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import { useState } from 'react'
 import Input from './Input'
 import PassInput from './PassInput'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 
 const SignUpForm = () => {
+  const navigate =useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +26,32 @@ const SignUpForm = () => {
 
  const [backendError, setBackendError] = useState("")
  const [backendMessage, setBackendMessage] = useState("")
+ const [showRedirectModal, setShowRedirectModal] = useState(false)
+ const [disableButton, setDisableButton] = useState(false)
+ const [loading, setLoading] = useState(false)
+ const [buttonValue, setButtonValue] = useState(<p>Sign Up</p>)
+
+ useEffect(
+  ()=>{
+    if(loading===true){
+      setDisableButton(true);
+      setButtonValue(<div className='flex  justify-center items-center gap-2 '>
+      <div className=' h-5 w-5 border-2 border-border border-t-primary rounded-full animate-spin  flex items-center justify-center'></div>
+      <p>Signing Up</p>
+      </div>
+                      
+      )
+    }
+    else{
+      setDisableButton(false)
+      setButtonValue(<p>Sign Up</p>)
+    }
+  }
+ ,[loading])
+
+
+
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     setErrors((prev) => ({
@@ -82,17 +111,25 @@ const SignUpForm = () => {
   }
   const sendData=async()=>{
     try {
-      setBackendError("")
-          setBackendMessage("")
+        setBackendError("")
+        setBackendMessage("")
+        setLoading(true)
         // console.log("signupfrontend")
         const response= await axios.post("http://localhost:5000/api/auth/register",{
         name:formData.name,
         email:formData.email,
         password:formData.password
         });
+        setLoading(false)
         console.log(response); 
-        setBackendMessage(response.data?.message)
+        setBackendMessage(response.data?.message||"hi")
+        console.log(backendMessage)
+        setShowRedirectModal(true)
+        setTimeout(() => {
+          navigate('/')
+        }, 1000);
     } catch (error) {
+          setLoading(false)
          console.log("STATUS:", error.response?.status);
          console.log("DATA:", error.response?.data);
          console.log("MESSAGE:", error.response?.data?.message);
@@ -104,6 +141,7 @@ const SignUpForm = () => {
     <div className='flex d  flex-col items-center gap-2'>
       {/* Enter Credentials and Sign up */}
       
+        
         <Input
         type="text"
         placeholder='enter your name'
@@ -154,7 +192,7 @@ const SignUpForm = () => {
       </div>
 
 
-      <Button value="Sign Up" onClickAction={sendData} />
+      <Button value={buttonValue} disabled={disableButton} onClickAction={sendData} />
 
       <div className={`text-red-700 text-[0.9rem]`}>
         {backendError}
@@ -168,6 +206,19 @@ const SignUpForm = () => {
         <p>Already have an account?</p>
         <Link to='/signin' className='text-blue-700 underline'>Sign in</Link>
       </div>
+
+      {showRedirectModal&&(
+          <div className='fixed inset-0 z-50 flex justify-center items-center bg-black/60 '>
+              <div className='w-[50%] bg-surface min-h-[40%] flex justify-center items-center flex-col rounded-2xl'>
+
+                <p>✓ Account created!</p>
+                <p>Let's get your CodeVault workspace ready...</p>
+                <div className=' h-10 w-10 border-2 border-border border-t-primary rounded-full animate-spin mt-3 '>
+
+                </div>
+              </div>
+          </div>
+       )}
     </div>
   )
 }
