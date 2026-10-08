@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, replace } from 'react-router-dom'
 import Button from './Button'
 import { useState } from 'react'
 import Input from './Input'
 import PassInput from './PassInput'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
-
+import useAuth from '../hooks/useAuth'
 const SignUpForm = () => {
   const navigate =useNavigate();
   const [formData, setFormData] = useState({
@@ -30,7 +29,7 @@ const SignUpForm = () => {
  const [disableButton, setDisableButton] = useState(false)
  const [loading, setLoading] = useState(false)
  const [buttonValue, setButtonValue] = useState(<p>Sign Up</p>)
-
+ const {authStatus,setAuthStatus,user,setUser}=useAuth()
  useEffect(
   ()=>{
     if(loading===true){
@@ -121,12 +120,15 @@ const SignUpForm = () => {
         password:formData.password
         });
         setLoading(false)
-        console.log(response); 
-        setBackendMessage(response.data?.message||"hi")
+        // console.log(response);
+        
+        setBackendMessage(response.data?.message)
+        localStorage.setItem("token",response.data.token);
         console.log(backendMessage)
         setShowRedirectModal(true)
         setTimeout(() => {
-          navigate('/')
+          setAuthStatus("authorized"); 
+          navigate('/dashboard')
         }, 1000);
     } catch (error) {
           setLoading(false)

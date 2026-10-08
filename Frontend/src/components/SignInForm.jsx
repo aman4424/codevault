@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, replace } from 'react-router-dom'
 import Button from './Button'
 import Input from './Input'
 import PassInput from './PassInput'
@@ -7,6 +7,9 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useContext } from 'react'
+import useAuth from '../hooks/useAuth'
+
 const SignInForm = () => {
     const navigate=useNavigate();
     const [formData, setFormData ] = useState({
@@ -24,6 +27,8 @@ const SignInForm = () => {
      const [disableButton, setDisableButton] = useState(false)
      const [loading, setLoading] = useState(false)
      const [buttonValue, setButtonValue] = useState(<p>Sign In</p>)
+
+     const {authStatus,setAuthStatus,user,setUser}=useAuth()
     
      useEffect(
       ()=>{
@@ -71,11 +76,15 @@ const SignInForm = () => {
        password:formData.password
 
      });
+     console.log(response)
      setBackendMessage(response.data?.message)
+     localStorage.setItem("token",response.data.token);
+     
      setLoading(false)
       setShowRedirectModal(true)
         setTimeout(() => {
-          navigate('/')
+          setAuthStatus("authorized")
+          navigate('/dashboard')
         }, 1000);
    
     } catch (error) {
