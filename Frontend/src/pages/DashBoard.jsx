@@ -1,10 +1,8 @@
 import React from 'react'
-
+import PublicLayout from '../layouts/PublicLayout'
 const DashBoard = () => {
   return (
-    <div>
-      DashBoard
-    </div>
+    <PublicLayout/>
   )
 }
 

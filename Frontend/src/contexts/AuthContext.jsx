@@ -1,12 +1,13 @@
 import { useContext,createContext,useEffect,useState} from "react"; 
-import moduleName from 'module'
+// import moduleName from 'module'
 import axios from "axios";
-export const AuthContext=createContext(null);
+import { useNavigate } from "react-router-dom";
 
+export const AuthContext=createContext(null);
 const AuthContextProvider=({children})=>{
     const [authStatus, setAuthStatus] = useState("checking");
     const [user, setUser] = useState(null);
-    
+    const navigate=useNavigate();
     useEffect(()=>{
         if(authStatus!=="checking")return;
         const token=localStorage.getItem("token");
@@ -23,6 +24,7 @@ const AuthContextProvider=({children})=>{
             })
             setUser(response.data.user);
             setAuthStatus("authorized");
+            navigate("/dashboard")
         } catch (error) {
             localStorage.removeItem("token"); // the token is bad or expired
            setAuthStatus("unauthorized");

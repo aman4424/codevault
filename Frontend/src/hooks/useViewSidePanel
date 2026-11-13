@@ -1,0 +1,7 @@
+import {useContext } from "react";
+import { SidePanelContext } from "../contexts/SidePanelContext";    
+
+const useViewSidePanel=()=>{
+    return useContext(SidePanelContext);
+}
+export default useViewSidePanel

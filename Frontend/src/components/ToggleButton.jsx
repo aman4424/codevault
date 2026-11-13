@@ -7,12 +7,12 @@ const[theme,setTheme]=useTheme()
   return (
     <div>
       <button
-       className='bg-primary rounded  '
+       className=' rounded-full border-none  '
        onClick={()=>{
             setTheme((theme)=>(theme==='dark'?'light':'dark'))
        }}
       >
-        Toggle Theme
+        {theme==='dark'?"☀️":"🌙"}
       </button>
     </div>
   )
