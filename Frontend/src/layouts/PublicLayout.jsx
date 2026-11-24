@@ -1,9 +1,10 @@
 
 import {useEffect} from 'react'
 import useViewSidePanel from '../hooks/useViewSidePanel'
-
-const DashBoardLayout = ({child1,child2}) => {
+import {Children} from 'react'
+const PublicLayout = ({children}) => {
   const {viewSidePanel,setViewSidePanel}=useViewSidePanel()
+   const [child1, child2] = Children.toArray(children)
   useEffect(() => {
     const handleEscape=(e)=>{
           if(e.key==="Escape"&&viewSidePanel){
@@ -19,18 +20,18 @@ const DashBoardLayout = ({child1,child2}) => {
   
   return (
     // sidebar + main content area
-    <div className="flex h-full gap-1 m-1">
+    <div className="relative flex h-full gap-1 m-1">
 
       {/* sidebar backdrop for max-sm */}
       <div 
         className={`
           h-full rounded flex flex-col gap-2 overflow-y-auto
-          max-sm:absolute max-sm:w-full
+          max-sm:absolute max-sm:inset-0 max-sm:z-50 max-sm:w-full
           transition-transform duration-300
 
           bg-black/60 backdrop-blur-sm
           transition-opacity duration-200
-
+          
           ${
             viewSidePanel
               ? "opacity-100 delay-300 pointer-events-auto"
@@ -39,7 +40,7 @@ const DashBoardLayout = ({child1,child2}) => {
 
           ${
             viewSidePanel === true
-              ? "translate-x-0 w-1/4 backdrop-blur-sm"
+              ? "translate-x-0 w-1/4 min-[803px]:min-w-[275px] backdrop-blur-sm"
               : "-translate-x-full w-0"
           }
         `}
@@ -60,11 +61,12 @@ const DashBoardLayout = ({child1,child2}) => {
       </div>
 
       <div
-        className={`min-w-3/4 w-full h-full overflow-y-auto bg-surface rounded border-white ${
+        className={` min-w-3/4 w-full h-full overflow-y-auto bg-surface rounded border-white ${
           viewSidePanel === false ? "w-full" : ""
         } ${viewSidePanel ? "overflow-hidden" : "overflow-y-auto"}`}
       >
         {/* main content goes here */}
+        
         {child2}
       </div>
 
@@ -72,4 +74,4 @@ const DashBoardLayout = ({child1,child2}) => {
   )
 }
 
-export default DashBoardLayout
+export default PublicLayout

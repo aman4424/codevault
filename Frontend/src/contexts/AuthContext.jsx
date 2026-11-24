@@ -24,7 +24,7 @@ const AuthContextProvider=({children})=>{
             })
             setUser(response.data.user);
             setAuthStatus("authorized");
-            navigate("/dashboard")
+            // navigate("/")
         } catch (error) {
             localStorage.removeItem("token"); // the token is bad or expired
            setAuthStatus("unauthorized");

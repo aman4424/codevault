@@ -9,7 +9,9 @@ import DashBoard from './pages/DashBoard'
 import PublicRoute from './components/PublicRoute'
 import PrivateRoute from './components/PrivateRoute'
 import AppLayout from './layouts/AppLayout'
-
+import NoteBookPage from './pages/NoteBookPage'
+import Settings from './pages/Settings'
+import Analytics from './pages/Analytics'
 const App = () => {
   return (
     <Routes>
@@ -33,7 +35,26 @@ const App = () => {
         <Route path='dashboard' element={<PrivateRoute>
           <DashBoard />
         </PrivateRoute>} />
-      </Route>
+        <Route path='notebooks' element={
+        <PrivateRoute>
+          <NoteBookPage/>
+        </PrivateRoute>
+       }/>
+        <Route path='analytics' element={
+        <PrivateRoute>
+          <Analytics/>
+        </PrivateRoute>
+       }/>
+        <Route path='settings' element={
+        <PrivateRoute>
+          <Settings/>
+        </PrivateRoute>
+       }/>
+       </Route>
+       
+          
+       
+       
     </Routes>
   )
 }

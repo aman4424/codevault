@@ -10,9 +10,9 @@ const PublicRoute = ({children}) => {
         )
     }
         
-    else if(authStatus=="authorized"){
-        return (<Navigate to="/dashboard" replace/>);
-    }
+    // else if(authStatus=="authorized"){
+    //     return (<Navigate to="/" replace/>);
+    // }
 
     return children;
 }
