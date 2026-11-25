@@ -2,7 +2,7 @@
 import { EllipsisVertical } from 'lucide-react';
 import { useState } from 'react';
 
-const Options = ({notebook,setEditingNotebook}) => {
+const Options = ({notebook,setEditingNotebook,setDeletingNotebook}) => {
   const [isClicked, setIsClicked] = useState(false);
     
   return (
@@ -34,7 +34,9 @@ const Options = ({notebook,setEditingNotebook}) => {
 
           <li
             className="px-3 py-2 cursor-pointer hover:bg-primary"
-            onClick={() => setIsClicked(false)}
+            onClick={() => {
+              setDeletingNotebook(notebook);
+              setIsClicked(false);}}
           >
             Delete notebook
           </li>

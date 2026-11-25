@@ -10,7 +10,8 @@ const NotebookToolbar = ({queryParams,setQueryParams}) => {
             setQueryParams(queryParams=>({
                 ...queryParams,
                 sortBy:'lastVisitedAt',
-                order:"desc"
+                order:"desc",
+                page:1
             }))
         }
         else if(value=='Recently created'){
