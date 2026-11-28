@@ -40,6 +40,31 @@ const problemDetailsSchema= new mongoose.Schema({
     _id:false
 });
 
+// Resource Schema
+const resourceDetailsSchema = new mongoose.Schema({
+    url: {
+        type: String,
+        trim: true
+    },
+    platform: {
+        type: String,
+        trim: true
+    },
+    resourceType: {
+        type: String,
+        enum: [
+            'video',
+            'article',
+            'documentation',
+            'course',
+            'repository',
+            'other'
+        ]
+    }
+}, {
+    _id: false
+});
+
 // Embedded attachment schema
 const  attachmentSchema= new mongoose.Schema({
     fileName:{
@@ -124,11 +149,19 @@ const EntrySchema=new mongoose.Schema({
         required: function (){
             return this.kind==="problem";
         }
+    },
+    resourceDetails: {
+    type: resourceDetailsSchema,
+    default: undefined,
+    required: function () {
+        return this.kind === 'resource';
+        }
     }
 
 },
 {
-    timestamps:true 
+    timestamps:true ,
+    minimize:false
 }
 
 );
